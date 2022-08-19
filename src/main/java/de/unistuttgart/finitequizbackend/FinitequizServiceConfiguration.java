@@ -1,4 +1,4 @@
-package de.unistuttgart.singlechoicebackend;
+package de.unistuttgart.finitequizbackend;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-public class SinglechoiceServiceConfiguration implements WebMvcConfigurer {
+public class FinitequizServiceConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {

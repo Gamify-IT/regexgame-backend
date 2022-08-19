@@ -1,4 +1,4 @@
-package de.unistuttgart.singlechoicebackend.data;
+package de.unistuttgart.finitequizbackend.data;
 
 import java.util.UUID;
 import javax.persistence.*;

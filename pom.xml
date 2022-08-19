@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.unistuttgart</groupId>
-    <artifactId>singlechoice-backend</artifactId>
+    <artifactId>finitequiz-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Singlechoice Backend</name>
-    <description>Backend for the Singlechoice minigame</description>
+    <name>Finitequiz Backend</name>
+    <description>Backend for the Finitequiz minigame</description>
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -112,7 +112,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.unistuttgart.singlechoicebackend.SinglechoiceServiceApplication</mainClass>
+                            <mainClass>de.unistuttgart.finitequizbackend.FinitequizServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

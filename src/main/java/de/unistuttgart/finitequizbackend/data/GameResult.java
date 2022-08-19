@@ -1,4 +1,4 @@
-package de.unistuttgart.singlechoicebackend.data;
+package de.unistuttgart.finitequizbackend.data;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,9 +1,9 @@
-package de.unistuttgart.singlechoicebackend.service;
+package de.unistuttgart.finitequizbackend.service;
 
-import de.unistuttgart.singlechoicebackend.clients.ResultClient;
-import de.unistuttgart.singlechoicebackend.data.*;
-import de.unistuttgart.singlechoicebackend.repositories.GameResultRepository;
-import de.unistuttgart.singlechoicebackend.repositories.QuestionRepository;
+import de.unistuttgart.finitequizbackend.clients.ResultClient;
+import de.unistuttgart.finitequizbackend.data.*;
+import de.unistuttgart.finitequizbackend.repositories.GameResultRepository;
+import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,7 +80,7 @@ public class GameResultService {
     gameResultRepository.save(result);
 
     OverworldResultDTO resultDTO = new OverworldResultDTO(
-      "SINGLECHOICE",
+      "FINITEQUIZ",
       gameResultDTO.getConfigurationAsUUID(),
       50,
       "1"

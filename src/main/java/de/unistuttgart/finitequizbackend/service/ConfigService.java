@@ -1,13 +1,13 @@
-package de.unistuttgart.singlechoicebackend.service;
+package de.unistuttgart.finitequizbackend.service;
 
-import de.unistuttgart.singlechoicebackend.data.Configuration;
-import de.unistuttgart.singlechoicebackend.data.ConfigurationDTO;
-import de.unistuttgart.singlechoicebackend.data.Question;
-import de.unistuttgart.singlechoicebackend.data.QuestionDTO;
-import de.unistuttgart.singlechoicebackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.singlechoicebackend.data.mapper.QuestionMapper;
-import de.unistuttgart.singlechoicebackend.repositories.ConfigurationRepository;
-import de.unistuttgart.singlechoicebackend.repositories.QuestionRepository;
+import de.unistuttgart.finitequizbackend.data.Configuration;
+import de.unistuttgart.finitequizbackend.data.ConfigurationDTO;
+import de.unistuttgart.finitequizbackend.data.Question;
+import de.unistuttgart.finitequizbackend.data.QuestionDTO;
+import de.unistuttgart.finitequizbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.finitequizbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;

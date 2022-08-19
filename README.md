@@ -1,5 +1,5 @@
-# Singlechoice-Backend
-This repo serves to persist the singlechoice data in a db and to communicate with different Microservices.
+# Finitequiz-Backend
+This repo serves to persist the finitequiz data in a db and to communicate with different Microservices.
 
 
 # Development
@@ -34,39 +34,39 @@ java -jar crossword-service-0.0.1-SNAPSHOT.jar
 
 Build the Docker container with
 ```sh
-docker build  -t singlechoice-backend-dev .
+docker build  -t finitequiz-backend-dev .
 ```
 And run it at port 8000 with 
 ```
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name singlechoice-backend-dev singlechoice-backend-dev
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name finitequiz-backend-dev finitequiz-backend-dev
 ```
 
 To monitor, stop and remove the container you can use the following commands:
 ```sh
-docker ps -a -f name=singlechoice-backend-dev
+docker ps -a -f name=finitequiz-backend-dev
 ```
 ```sh
-docker stop singlechoice-backend-dev
+docker stop finitequiz-backend-dev
 ```
 ```sh
-docker rm singlechoice-backend-dev
+docker rm finitequiz-backend-dev
 ```
 
 To run the prebuild container use
 ```sh
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name singlechoice-backend ghcr.io/gamify-it/singlechoice-backend:latest
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name finitequiz-backend ghcr.io/gamify-it/finitequiz-backend:latest
 ```
 
 
 ### testing database
 to setup a database with docker for testing you can use
 ```sh
-docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name singlechoice-database postgres
+docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name finitequiz-database postgres
 ```
 To stop and remove it simply type
 ```sh
-docker stop singlechoice-database
+docker stop finitequiz-database
 ```
 
 ### Rest mappings
-Rest mappings are defined in [`singlechoice-service/src/main/java/com/singlechoiceservice/singlechoiceservice/controller/SinglechoiceController.java`](singlechoice-service/src/main/java/com/singlechoiceservice/singlechoiceservice/controller/SinglechoiceController.java)
+Rest mappings are defined in [`finitequiz-service/src/main/java/com/finitequizservice/finitequizservice/controller/FinitequizController.java`](finitequiz-service/src/main/java/com/finitequizservice/finitequizservice/controller/finitequizController.java)
