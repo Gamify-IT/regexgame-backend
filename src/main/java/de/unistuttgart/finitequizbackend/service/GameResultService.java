@@ -65,13 +65,7 @@ public class GameResultService {
     //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
     GameResult result = new GameResult(
       gameResultDTO.getQuestionCount(),
-      gameResultDTO.getTimeLimit(),
-      gameResultDTO.getFinishedInSeconds(),
-      gameResultDTO.getCorrectKillsCount(),
-      gameResultDTO.getWrongKillsCount(),
-      gameResultDTO.getKillsCount(),
-      gameResultDTO.getShotCount(),
-      gameResultDTO.getPoints(),
+      gameResultDTO.getScore(),
       correctQuestions,
       wrongQuestions,
       gameResultDTO.getConfigurationAsUUID(),
