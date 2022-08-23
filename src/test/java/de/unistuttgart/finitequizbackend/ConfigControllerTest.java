@@ -1,18 +1,18 @@
-package de.unistuttgart.singlechoicebackend;
+package de.unistuttgart.finitequizbackend;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.unistuttgart.singlechoicebackend.data.Configuration;
-import de.unistuttgart.singlechoicebackend.data.ConfigurationDTO;
-import de.unistuttgart.singlechoicebackend.data.Question;
-import de.unistuttgart.singlechoicebackend.data.QuestionDTO;
-import de.unistuttgart.singlechoicebackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.singlechoicebackend.data.mapper.QuestionMapper;
-import de.unistuttgart.singlechoicebackend.repositories.ConfigurationRepository;
-import de.unistuttgart.singlechoicebackend.repositories.QuestionRepository;
+import de.unistuttgart.finitequizbackend.data.Configuration;
+import de.unistuttgart.finitequizbackend.data.ConfigurationDTO;
+import de.unistuttgart.finitequizbackend.data.Question;
+import de.unistuttgart.finitequizbackend.data.QuestionDTO;
+import de.unistuttgart.finitequizbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.finitequizbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

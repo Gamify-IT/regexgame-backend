@@ -1,11 +1,11 @@
-package de.unistuttgart.singlechoicebackend.controller;
+package de.unistuttgart.finitequizbackend.controller;
 
-import de.unistuttgart.singlechoicebackend.data.ConfigurationDTO;
-import de.unistuttgart.singlechoicebackend.data.QuestionDTO;
-import de.unistuttgart.singlechoicebackend.data.mapper.ConfigurationMapper;
-import de.unistuttgart.singlechoicebackend.data.mapper.QuestionMapper;
-import de.unistuttgart.singlechoicebackend.repositories.ConfigurationRepository;
-import de.unistuttgart.singlechoicebackend.service.ConfigService;
+import de.unistuttgart.finitequizbackend.data.ConfigurationDTO;
+import de.unistuttgart.finitequizbackend.data.QuestionDTO;
+import de.unistuttgart.finitequizbackend.data.mapper.ConfigurationMapper;
+import de.unistuttgart.finitequizbackend.data.mapper.QuestionMapper;
+import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
+import de.unistuttgart.finitequizbackend.service.ConfigService;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;

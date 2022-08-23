@@ -1,6 +1,6 @@
-package de.unistuttgart.singlechoicebackend.clients;
+package de.unistuttgart.finitequizbackend.clients;
 
-import de.unistuttgart.singlechoicebackend.data.OverworldResultDTO;
+import de.unistuttgart.finitequizbackend.data.OverworldResultDTO;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

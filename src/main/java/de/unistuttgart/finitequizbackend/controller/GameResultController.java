@@ -1,7 +1,7 @@
-package de.unistuttgart.singlechoicebackend.controller;
+package de.unistuttgart.finitequizbackend.controller;
 
-import de.unistuttgart.singlechoicebackend.data.GameResultDTO;
-import de.unistuttgart.singlechoicebackend.service.GameResultService;
+import de.unistuttgart.finitequizbackend.data.GameResultDTO;
+import de.unistuttgart.finitequizbackend.service.GameResultService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

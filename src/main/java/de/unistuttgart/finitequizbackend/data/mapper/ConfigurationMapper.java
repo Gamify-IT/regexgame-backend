@@ -1,7 +1,7 @@
-package de.unistuttgart.singlechoicebackend.data.mapper;
+package de.unistuttgart.finitequizbackend.data.mapper;
 
-import de.unistuttgart.singlechoicebackend.data.Configuration;
-import de.unistuttgart.singlechoicebackend.data.ConfigurationDTO;
+import de.unistuttgart.finitequizbackend.data.Configuration;
+import de.unistuttgart.finitequizbackend.data.ConfigurationDTO;
 import java.util.List;
 import org.mapstruct.Mapper;
 

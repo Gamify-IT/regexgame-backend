@@ -1,6 +1,6 @@
-package de.unistuttgart.singlechoicebackend.repositories;
+package de.unistuttgart.finitequizbackend.repositories;
 
-import de.unistuttgart.singlechoicebackend.data.Question;
+import de.unistuttgart.finitequizbackend.data.Question;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

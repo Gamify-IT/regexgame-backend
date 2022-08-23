@@ -1,4 +1,4 @@
-package de.unistuttgart.singlechoicebackend.data;
+package de.unistuttgart.finitequizbackend.data;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,13 +20,7 @@ public class GameResult {
   private long id;
 
   private int questionCount;
-  private float timeLimit;
-  private float finishedInSeconds;
-  private int correctKillsCount;
-  private int wrongKillsCount;
-  private int killsCount;
-  private int shotCount;
-  private int points;
+  private float score;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<RoundResult> correctAnsweredQuestions;
@@ -40,26 +34,14 @@ public class GameResult {
 
   public GameResult(
     int questionCount,
-    float timeLimit,
-    float finishedInSeconds,
-    int correctKillsCount,
-    int wrongKillsCount,
-    int killsCount,
-    int shotCount,
-    int points,
+    float score,
     List<RoundResult> correctAnsweredQuestions,
     List<RoundResult> wrongAnsweredQuestions,
     UUID configurationAsUUID,
     String playerId
   ) {
     this.questionCount = questionCount;
-    this.timeLimit = timeLimit;
-    this.finishedInSeconds = finishedInSeconds;
-    this.correctKillsCount = correctKillsCount;
-    this.wrongKillsCount = wrongKillsCount;
-    this.killsCount = killsCount;
-    this.shotCount = shotCount;
-    this.points = points;
+    this.score = score;
     this.correctAnsweredQuestions = correctAnsweredQuestions;
     this.wrongAnsweredQuestions = wrongAnsweredQuestions;
     this.configurationAsUUID = configurationAsUUID;

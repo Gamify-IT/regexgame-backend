@@ -1,4 +1,4 @@
-package de.unistuttgart.singlechoicebackend.service;
+package de.unistuttgart.finitequizbackend.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
