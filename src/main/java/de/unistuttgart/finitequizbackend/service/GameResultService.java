@@ -7,6 +7,8 @@ import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,25 +62,35 @@ public class GameResultService {
    * @param gameResultDTO extern gameResultDTO
    */
   public void saveGameResult(GameResultDTO gameResultDTO) {
-    List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
-    List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
-    //String playerId = authorizationService.getPlayerId(token);TODO: after login is implemented
-    GameResult result = new GameResult(
-      gameResultDTO.getQuestionCount(),
-      gameResultDTO.getScore(),
-      correctQuestions,
-      wrongQuestions,
-      gameResultDTO.getConfigurationAsUUID(),
-      "playerId"
-    );
-    gameResultRepository.save(result);
-
     OverworldResultDTO resultDTO = new OverworldResultDTO(
-      "FINITEQUIZ",
-      gameResultDTO.getConfigurationAsUUID(),
-      50,
-      "1"
+            "FINITEQUIZ",
+            gameResultDTO.getConfigurationAsUUID(),
+            50,
+            "1"
     );
-    resultClient.submit(resultDTO);
+    try {
+      resultClient.submit(resultDTO);
+      List<RoundResult> correctQuestions = this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
+      List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
+      GameResult result = new GameResult(
+              gameResultDTO.getQuestionCount(),
+              gameResultDTO.getScore(),
+              correctQuestions,
+              wrongQuestions,
+              gameResultDTO.getConfigurationAsUUID(),
+              "playerId"
+      );
+      gameResultRepository.save(result);
+    } catch (FeignException.BadGateway badGateway) {
+      String warning = "The Overworld backend is currently not available. The result was NOT saved. Please try again later";
+      log.warn(warning + badGateway);
+      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+              warning);
+    } catch (FeignException.NotFound notFound) {
+      String warning = "The result could not be saved. Unknown User";
+      log.warn(warning + notFound);
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+              warning);
+    }
   }
 }
