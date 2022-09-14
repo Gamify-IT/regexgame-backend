@@ -99,7 +99,7 @@ services:
 
   finitequiz:
     container_name: finitequiz
-    image: ghcr.io/gamify-it/finitequiz:main
+    image: ghcr.io/gamify-it/finitequiz:latest
     restart: always
     pull_policy: always
     expose:
