@@ -61,12 +61,13 @@ public class GameResultService {
    *
    * @param gameResultDTO extern gameResultDTO
    */
-  public void saveGameResult(GameResultDTO gameResultDTO) {
+  public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
+    final int resultScore = calculateResultScore(gameResultDTO.getCorrectAnsweredQuestions().size(), gameResultDTO.getQuestionCount());
     OverworldResultDTO resultDTO = new OverworldResultDTO(
             "FINITEQUIZ",
             gameResultDTO.getConfigurationAsUUID(),
-            50,
-            "1"
+            resultScore,
+            userId
     );
     try {
       resultClient.submit(resultDTO);
@@ -78,7 +79,7 @@ public class GameResultService {
               correctQuestions,
               wrongQuestions,
               gameResultDTO.getConfigurationAsUUID(),
-              "playerId"
+              userId
       );
       gameResultRepository.save(result);
     } catch (FeignException.BadGateway badGateway) {
@@ -92,5 +93,8 @@ public class GameResultService {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND,
               warning);
     }
+  }
+  private int calculateResultScore(final int correctAnswers, final int numberOfQuestions) {
+    return (int) ((100.0 * correctAnswers) / numberOfQuestions);
   }
 }
