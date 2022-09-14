@@ -21,11 +21,13 @@ public class GameResultController {
 
   @Value("${keycloak.issuer}")
   private String keycloakIssuer;
+  @Value("${keycloak.url}")
+  private String keycloakUrl;
 
   private JWTValidatorService jwtValidatorService;
   @Autowired
   private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer);
+    jwtValidatorService = new JWTValidatorService(keycloakIssuer, keycloakUrl);
   }
 
   @PostMapping("")
