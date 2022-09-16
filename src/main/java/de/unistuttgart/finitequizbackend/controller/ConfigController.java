@@ -7,13 +7,11 @@ import de.unistuttgart.finitequizbackend.data.mapper.QuestionMapper;
 import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.finitequizbackend.service.ConfigService;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;

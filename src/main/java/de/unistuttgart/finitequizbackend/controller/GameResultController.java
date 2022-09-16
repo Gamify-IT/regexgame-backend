@@ -3,7 +3,6 @@ package de.unistuttgart.finitequizbackend.controller;
 import de.unistuttgart.finitequizbackend.data.GameResultDTO;
 import de.unistuttgart.finitequizbackend.service.GameResultService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
-import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
