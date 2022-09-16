@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/configurations")
-@Import({JWTValidatorService.class, Properties.class})
+@Import({JWTValidatorService.class})
 @Slf4j
 public class ConfigController {
 

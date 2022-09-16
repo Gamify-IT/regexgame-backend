@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/results")
-@Import({JWTValidatorService.class, Properties.class})
+@Import({JWTValidatorService.class})
 @Slf4j
 public class GameResultController {
 
