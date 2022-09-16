@@ -16,7 +16,6 @@ import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +37,6 @@ public class ConfigController {
 
   @Autowired
   ConfigurationMapper configurationMapper;
-
-  @Value("${keycloak.issuer}")
-  private String keycloakIssuer;
 
   @Autowired
   private JWTValidatorService jwtValidatorService;
