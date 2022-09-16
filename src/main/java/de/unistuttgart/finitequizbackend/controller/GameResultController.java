@@ -3,9 +3,11 @@ package de.unistuttgart.finitequizbackend.controller;
 import de.unistuttgart.finitequizbackend.data.GameResultDTO;
 import de.unistuttgart.finitequizbackend.service.GameResultService;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.net.MalformedURLException;
 
 @RestController
 @RequestMapping("/results")
+@Import({JWTValidatorService.class, Properties.class})
 @Slf4j
 public class GameResultController {
 
@@ -22,11 +25,8 @@ public class GameResultController {
   @Value("${keycloak.issuer}")
   private String keycloakIssuer;
 
-  private JWTValidatorService jwtValidatorService;
   @Autowired
-  private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer);
-  }
+  private JWTValidatorService jwtValidatorService;
 
   @PostMapping("")
   @ResponseStatus(HttpStatus.CREATED)

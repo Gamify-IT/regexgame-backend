@@ -13,14 +13,17 @@ import java.util.Set;
 import java.util.UUID;
 
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+import de.unistuttgart.gamifyit.authentificationvalidator.Properties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/configurations")
+@Import({JWTValidatorService.class, Properties.class})
 @Slf4j
 public class ConfigController {
 
@@ -39,11 +42,8 @@ public class ConfigController {
   @Value("${keycloak.issuer}")
   private String keycloakIssuer;
 
-  private JWTValidatorService jwtValidatorService;
   @Autowired
-  private void setJWTValidatorService() throws MalformedURLException {
-    jwtValidatorService = new JWTValidatorService(keycloakIssuer);
-  }
+  private JWTValidatorService jwtValidatorService;
 
   @GetMapping("")
   public List<ConfigurationDTO> getConfigurations(@CookieValue("access_token") final String accessToken) {
