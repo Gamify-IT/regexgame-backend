@@ -11,8 +11,8 @@ services:
     environment:
       POSTGRES_SETUP: >
         keycloak/default.sql
-        overworld/default.sql
-        finitequiz/default.sql
+#        overworld/default.sql
+#        finitequiz/default.sql
 
   keycloak-db:
     container_name: keycloak-db
