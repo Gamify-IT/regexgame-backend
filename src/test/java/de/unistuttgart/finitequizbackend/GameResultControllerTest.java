@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -106,8 +107,8 @@ class GameResultControllerTest {
 
     objectMapper = new ObjectMapper();
 
-    DecodedJWT jwtTest = JWT.decode(JWT.create().withSubject("testUser").sign(Algorithm.none()));
-    when(jwtValidatorService.validate("testToken")).thenReturn(jwtTest);
+    doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
+    when(jwtValidatorService.extractUserId("testToken")).thenReturn("testUser");
   }
 
   @AfterEach
