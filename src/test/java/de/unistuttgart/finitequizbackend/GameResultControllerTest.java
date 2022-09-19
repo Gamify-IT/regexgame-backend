@@ -1,11 +1,16 @@
 package de.unistuttgart.finitequizbackend;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.unistuttgart.finitequizbackend.data.*;
 import de.unistuttgart.finitequizbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.finitequizbackend.repositories.GameResultRepository;
+import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,13 +28,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import javax.servlet.http.Cookie;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,6 +71,10 @@ class GameResultControllerTest {
 
   private final String API_URL = "/results";
 
+  @MockBean
+  JWTValidatorService jwtValidatorService;
+  Cookie cookie = new Cookie("access_token", "testToken");
+
   @BeforeEach
   public void createBasicData() throws IOException {
     ResultMocks.setupMockBooksResponse(mockResultsService);
@@ -96,6 +106,9 @@ class GameResultControllerTest {
       .forEach(question -> initialQuestion2 = question);
 
     objectMapper = new ObjectMapper();
+
+    doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
+    when(jwtValidatorService.extractUserId("testToken")).thenReturn("testUser");
   }
 
   @AfterEach
@@ -118,7 +131,7 @@ class GameResultControllerTest {
 
     final String bodyValue = objectMapper.writeValueAsString(gameResultDTO);
     final MvcResult result = mvc
-      .perform(post(API_URL).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
+      .perform(post(API_URL).cookie(cookie).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isCreated())
       .andReturn();
 
