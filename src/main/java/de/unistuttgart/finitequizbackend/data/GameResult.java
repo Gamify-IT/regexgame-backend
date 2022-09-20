@@ -15,37 +15,37 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GameResult {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-  private int questionCount;
-  private float score;
+    private int questionCount;
+    private float score;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<RoundResult> correctAnsweredQuestions;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RoundResult> correctAnsweredQuestions;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<RoundResult> wrongAnsweredQuestions;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RoundResult> wrongAnsweredQuestions;
 
-  private UUID configurationAsUUID;
-  private String playerId;
-  private LocalDateTime playedTime;
+    private UUID configurationAsUUID;
+    private String playerId;
+    private LocalDateTime playedTime;
 
-  public GameResult(
-    int questionCount,
-    float score,
-    List<RoundResult> correctAnsweredQuestions,
-    List<RoundResult> wrongAnsweredQuestions,
-    UUID configurationAsUUID,
-    String playerId
-  ) {
-    this.questionCount = questionCount;
-    this.score = score;
-    this.correctAnsweredQuestions = correctAnsweredQuestions;
-    this.wrongAnsweredQuestions = wrongAnsweredQuestions;
-    this.configurationAsUUID = configurationAsUUID;
-    this.playerId = playerId;
-    this.playedTime = LocalDateTime.now();
-  }
+    public GameResult(
+        final int questionCount,
+        final float score,
+        final List<RoundResult> correctAnsweredQuestions,
+        final List<RoundResult> wrongAnsweredQuestions,
+        final UUID configurationAsUUID,
+        final String playerId
+    ) {
+        this.questionCount = questionCount;
+        this.score = score;
+        this.correctAnsweredQuestions = correctAnsweredQuestions;
+        this.wrongAnsweredQuestions = wrongAnsweredQuestions;
+        this.configurationAsUUID = configurationAsUUID;
+        this.playerId = playerId;
+        this.playedTime = LocalDateTime.now();
+    }
 }

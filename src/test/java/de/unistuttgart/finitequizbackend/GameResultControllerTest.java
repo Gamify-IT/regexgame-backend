@@ -1,9 +1,11 @@
 package de.unistuttgart.finitequizbackend;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import de.unistuttgart.finitequizbackend.data.*;
@@ -11,6 +13,12 @@ import de.unistuttgart.finitequizbackend.data.mapper.ConfigurationMapper;
 import de.unistuttgart.finitequizbackend.repositories.ConfigurationRepository;
 import de.unistuttgart.finitequizbackend.repositories.GameResultRepository;
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import javax.servlet.http.Cookie;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,16 +36,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import javax.servlet.http.Cookie;
-import java.io.IOException;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -47,99 +45,97 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = { WireMockConfig.class })
 class GameResultControllerTest {
 
-  @Autowired
-  private MockMvc mvc;
+    private final String API_URL = "/results";
 
-  @Autowired
-  private ConfigurationMapper configurationMapper;
+    @MockBean
+    JWTValidatorService jwtValidatorService;
 
-  @Autowired
-  private ConfigurationRepository configurationRepository;
+    Cookie cookie = new Cookie("access_token", "testToken");
 
-  @Autowired
-  private GameResultRepository gameResultRepository;
+    @Autowired
+    private MockMvc mvc;
 
-  @Autowired
-  private WireMockServer mockResultsService;
+    @Autowired
+    private ConfigurationMapper configurationMapper;
 
-  private ObjectMapper objectMapper;
-  private Configuration initialConfig;
-  private ConfigurationDTO initialConfigDTO;
+    @Autowired
+    private ConfigurationRepository configurationRepository;
 
-  private Question initialQuestion1;
-  private Question initialQuestion2;
+    @Autowired
+    private GameResultRepository gameResultRepository;
 
-  private final String API_URL = "/results";
+    @Autowired
+    private WireMockServer mockResultsService;
 
-  @MockBean
-  JWTValidatorService jwtValidatorService;
-  Cookie cookie = new Cookie("access_token", "testToken");
+    private ObjectMapper objectMapper;
+    private Configuration initialConfig;
+    private ConfigurationDTO initialConfigDTO;
+    private Question initialQuestion1;
+    private Question initialQuestion2;
 
-  @BeforeEach
-  public void createBasicData() throws IOException {
-    ResultMocks.setupMockBooksResponse(mockResultsService);
-    configurationRepository.deleteAll();
-    initialQuestion1 = new Question();
-    initialQuestion1.setText("Are you cool?");
-    initialQuestion1.setRightAnswer("Yes");
-    initialQuestion1.setWrongAnswers(Set.of("No", "Maybe"));
+    @BeforeEach
+    public void createBasicData() throws IOException {
+        ResultMocks.setupMockBooksResponse(mockResultsService);
+        configurationRepository.deleteAll();
+        initialQuestion1 = new Question();
+        initialQuestion1.setText("Are you cool?");
+        initialQuestion1.setRightAnswer("Yes");
+        initialQuestion1.setWrongAnswers(Set.of("No", "Maybe"));
 
-    initialQuestion2 = new Question();
-    initialQuestion2.setText("Is this game cool?");
-    initialQuestion2.setRightAnswer("Yes");
-    initialQuestion2.setWrongAnswers(Set.of("No", "Maybe"));
+        initialQuestion2 = new Question();
+        initialQuestion2.setText("Is this game cool?");
+        initialQuestion2.setRightAnswer("Yes");
+        initialQuestion2.setWrongAnswers(Set.of("No", "Maybe"));
 
-    final Configuration configuration = new Configuration();
-    configuration.setQuestions(Set.of(initialQuestion1, initialQuestion2));
+        final Configuration configuration = new Configuration();
+        configuration.setQuestions(Set.of(initialQuestion1, initialQuestion2));
 
-    initialConfig = configurationRepository.save(configuration);
-    initialConfigDTO = configurationMapper.configurationToConfigurationDTO(initialConfig);
-    initialConfig
-      .getQuestions()
-      .stream()
-      .filter(question -> question.getText().equals(initialQuestion1.getText()))
-      .forEach(question -> initialQuestion1 = question);
-    initialConfig
-      .getQuestions()
-      .stream()
-      .filter(question -> question.getText().equals(initialQuestion2.getText()))
-      .forEach(question -> initialQuestion2 = question);
+        initialConfig = configurationRepository.save(configuration);
+        initialConfigDTO = configurationMapper.configurationToConfigurationDTO(initialConfig);
+        initialConfig
+            .getQuestions()
+            .stream()
+            .filter(question -> question.getText().equals(initialQuestion1.getText()))
+            .forEach(question -> initialQuestion1 = question);
+        initialConfig
+            .getQuestions()
+            .stream()
+            .filter(question -> question.getText().equals(initialQuestion2.getText()))
+            .forEach(question -> initialQuestion2 = question);
 
-    objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
 
-    doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
-    when(jwtValidatorService.extractUserId("testToken")).thenReturn("testUser");
-  }
+        doNothing().when(jwtValidatorService).validateTokenOrThrow("testToken");
+        when(jwtValidatorService.extractUserId("testToken")).thenReturn("testUser");
+    }
 
-  @AfterEach
-  void deleteBasicData() {
-    gameResultRepository.deleteAll();
-    configurationRepository.deleteAll();
-  }
+    @AfterEach
+    void deleteBasicData() {
+        gameResultRepository.deleteAll();
+        configurationRepository.deleteAll();
+    }
 
-  @Test
-  void saveGameResult() throws Exception {
-    List<RoundResultDTO> correctList = new ArrayList<>();
-    List<RoundResultDTO> wrongList = new ArrayList<>();
-    correctList.add(new RoundResultDTO(initialQuestion1.getId(), initialQuestion1.getRightAnswer()));
-    wrongList.add(
-      new RoundResultDTO(initialQuestion2.getId(), initialQuestion2.getWrongAnswers().stream().findFirst().get())
-    );
-    GameResultDTO gameResultDTO = new GameResultDTO(2,1,correctList,
-            wrongList,
-            UUID.randomUUID());
+    @Test
+    void saveGameResult() throws Exception {
+        final List<RoundResultDTO> correctList = new ArrayList<>();
+        final List<RoundResultDTO> wrongList = new ArrayList<>();
+        correctList.add(new RoundResultDTO(initialQuestion1.getId(), initialQuestion1.getRightAnswer()));
+        wrongList.add(
+            new RoundResultDTO(initialQuestion2.getId(), initialQuestion2.getWrongAnswers().stream().findFirst().get())
+        );
+        final GameResultDTO gameResultDTO = new GameResultDTO(2, 1, correctList, wrongList, UUID.randomUUID());
 
-    final String bodyValue = objectMapper.writeValueAsString(gameResultDTO);
-    final MvcResult result = mvc
-      .perform(post(API_URL).cookie(cookie).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isCreated())
-      .andReturn();
+        final String bodyValue = objectMapper.writeValueAsString(gameResultDTO);
+        final MvcResult result = mvc
+            .perform(post(API_URL).cookie(cookie).content(bodyValue).contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andReturn();
 
-    final GameResultDTO createdGameResultDTO = objectMapper.readValue(
-      result.getResponse().getContentAsString(),
-      GameResultDTO.class
-    );
+        final GameResultDTO createdGameResultDTO = objectMapper.readValue(
+            result.getResponse().getContentAsString(),
+            GameResultDTO.class
+        );
 
-    assertEquals(gameResultDTO, createdGameResultDTO);
-  }
+        assertEquals(gameResultDTO, createdGameResultDTO);
+    }
 }

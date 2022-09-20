@@ -2,7 +2,10 @@ package de.unistuttgart.finitequizbackend.data;
 
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,19 +17,19 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Question {
 
-  @Id
-  @GeneratedValue(generator = "uuid")
-  UUID id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    UUID id;
 
-  String text;
-  String rightAnswer;
+    String text;
+    String rightAnswer;
 
-  @ElementCollection
-  Set<String> wrongAnswers;
+    @ElementCollection
+    Set<String> wrongAnswers;
 
-  public Question(final String text, final String rightAnswer, final Set<String> wrongAnswers) {
-    this.text = text;
-    this.rightAnswer = rightAnswer;
-    this.wrongAnswers = wrongAnswers;
-  }
+    public Question(final String text, final String rightAnswer, final Set<String> wrongAnswers) {
+        this.text = text;
+        this.rightAnswer = rightAnswer;
+        this.wrongAnswers = wrongAnswers;
+    }
 }

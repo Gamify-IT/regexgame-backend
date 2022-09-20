@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OverworldResultDTO {
 
-  String game;
-  UUID configurationId;
-  long score;
-  String userId;
+    String game;
+    UUID configurationId;
+    long score;
+    String userId;
 }
