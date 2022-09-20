@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.lang.Nullable;
 
+/**
+ * The ConfigurationDTO.class contains all data that has to be stored to configure a finitequiz game
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
