@@ -5,15 +5,16 @@ import de.unistuttgart.finitequizbackend.data.*;
 import de.unistuttgart.finitequizbackend.repositories.GameResultRepository;
 import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import feign.FeignException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * This service handles the logic for the GameResultController.class
@@ -88,11 +89,11 @@ public class GameResultService {
         } catch (final FeignException.BadGateway badGateway) {
             final String warning =
                 "The Overworld backend is currently not available. The result was NOT saved. Please try again later";
-            log.warn(warning + badGateway);
+            log.error(warning + badGateway);
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, warning);
         } catch (final FeignException.NotFound notFound) {
             final String warning = "The result could not be saved. Unknown User";
-            log.warn(warning + notFound);
+            log.error(warning + notFound);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, warning);
         }
     }
