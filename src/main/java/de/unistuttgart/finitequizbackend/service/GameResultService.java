@@ -5,16 +5,15 @@ import de.unistuttgart.finitequizbackend.data.*;
 import de.unistuttgart.finitequizbackend.repositories.GameResultRepository;
 import de.unistuttgart.finitequizbackend.repositories.QuestionRepository;
 import feign.FeignException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * This service handles the logic for the GameResultController.class
@@ -60,8 +59,12 @@ public class GameResultService {
      * Casts a GameResultDTO to GameResult and saves it in the Database
      *
      * @param gameResultDTO extern gameResultDTO
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public void saveGameResult(final GameResultDTO gameResultDTO, final String userId) {
+        if (gameResultDTO == null || userId == null) {
+            throw new IllegalArgumentException("gameResultDTO or userId is null");
+        }
         final int resultScore = calculateResultScore(
             gameResultDTO.getCorrectAnsweredQuestions().size(),
             gameResultDTO.getQuestionCount()
@@ -98,7 +101,24 @@ public class GameResultService {
         }
     }
 
+    /**
+     * calculates the score a player made
+     *
+     * @param correctAnswers    correct answer count
+     * @param numberOfQuestions available question count
+     * @return score as int in %
+     * @throws IllegalArgumentException if correctAnswers < 0 || numberOfQuestions < correctAnswers
+     */
     private int calculateResultScore(final int correctAnswers, final int numberOfQuestions) {
+        if (correctAnswers < 0 || numberOfQuestions < correctAnswers) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "correctAnswers (%s) or numberOfQuestions (%s) is not possible",
+                    correctAnswers,
+                    numberOfQuestions
+                )
+            );
+        }
         return (int) ((100.0 * correctAnswers) / numberOfQuestions);
     }
 }

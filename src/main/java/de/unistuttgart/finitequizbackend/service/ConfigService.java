@@ -42,9 +42,13 @@ public class ConfigService {
      *
      * @param id the id of the configuration searching for
      * @return the found configuration
-     * @throws ResponseStatusException when configuration by configurationName could not be found
+     * @throws ResponseStatusException  when configuration by configurationName could not be found
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public Configuration getConfiguration(final UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
         return configurationRepository
             .findById(id)
             .orElseThrow(() ->
@@ -60,8 +64,12 @@ public class ConfigService {
      *
      * @param configurationDTO configuration that should be saved
      * @return the saved configuration as DTO
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO saveConfiguration(final ConfigurationDTO configurationDTO) {
+        if (configurationDTO == null) {
+            throw new IllegalArgumentException("configurationDTO is null");
+        }
         final Configuration savedConfiguration = configurationRepository.save(
             configurationMapper.configurationDTOToConfiguration(configurationDTO)
         );
@@ -74,9 +82,13 @@ public class ConfigService {
      * @param id               the id of the configuration that should be updated
      * @param configurationDTO configuration that should be updated
      * @return the updated configuration as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO updateConfiguration(final UUID id, final ConfigurationDTO configurationDTO) {
+        if (id == null || configurationDTO == null) {
+            throw new IllegalArgumentException("id or configurationDTO is null");
+        }
         final Configuration configuration = getConfiguration(id);
         configuration.setQuestions(questionMapper.questionDTOsToQuestions(configurationDTO.getQuestions()));
         final Configuration updatedConfiguration = configurationRepository.save(configuration);
@@ -88,9 +100,13 @@ public class ConfigService {
      *
      * @param id the id of the configuration that should be updated
      * @return the deleted configuration as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public ConfigurationDTO deleteConfiguration(final UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
         final Configuration configuration = getConfiguration(id);
         configurationRepository.delete(configuration);
         return configurationMapper.configurationToConfigurationDTO(configuration);
@@ -102,9 +118,13 @@ public class ConfigService {
      * @param id          the id of the configuration where a question should be added
      * @param questionDTO the question that should be added
      * @return the added question as DTO
-     * @throws ResponseStatusException when configuration with the id does not exist
+     * @throws ResponseStatusException  when configuration with the id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO addQuestionToConfiguration(final UUID id, final QuestionDTO questionDTO) {
+        if (id == null || questionDTO == null) {
+            throw new IllegalArgumentException("id or questionDTO is null");
+        }
         final Configuration configuration = getConfiguration(id);
         final Question question = questionRepository.save(questionMapper.questionDTOToQuestion(questionDTO));
         configuration.addQuestion(question);
@@ -118,9 +138,13 @@ public class ConfigService {
      * @param id         the id of the configuration where a question should be removed
      * @param questionId the id of the question that should be deleted
      * @return the deleted question as DTO
-     * @throws ResponseStatusException when configuration with the id or question with id does not exist
+     * @throws ResponseStatusException  when configuration with the id or question with id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO removeQuestionFromConfiguration(final UUID id, final UUID questionId) {
+        if (id == null || questionId == null) {
+            throw new IllegalArgumentException("id or questionId is null");
+        }
         final Configuration configuration = getConfiguration(id);
         final Question question = getQuestionInConfiguration(questionId, configuration)
             .orElseThrow(() ->
@@ -142,13 +166,17 @@ public class ConfigService {
      * @param questionId  the id of the question that should be updated
      * @param questionDTO the content of the question that should be updated
      * @return the updated question as DTO
-     * @throws ResponseStatusException when configuration with the id or question with id does not exist
+     * @throws ResponseStatusException  when configuration with the id or question with id does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     public QuestionDTO updateQuestionFromConfiguration(
         final UUID id,
         final UUID questionId,
         final QuestionDTO questionDTO
     ) {
+        if (id == null || questionId == null || questionDTO == null) {
+            throw new IllegalArgumentException("id or questionId or questionDTO is null");
+        }
         final Configuration configuration = getConfiguration(id);
         if (getQuestionInConfiguration(questionId, configuration).isEmpty()) {
             throw new ResponseStatusException(
@@ -166,9 +194,13 @@ public class ConfigService {
      * @param questionId    id of searched question
      * @param configuration configuration in which the question is part of
      * @return an optional of the question
-     * @throws ResponseStatusException when question with the id in the given configuration does not exist
+     * @throws ResponseStatusException  when question with the id in the given configuration does not exist
+     * @throws IllegalArgumentException if at least one of the arguments is null
      */
     private Optional<Question> getQuestionInConfiguration(final UUID questionId, final Configuration configuration) {
+        if (questionId == null || configuration == null) {
+            throw new IllegalArgumentException("questionId or configuration is null");
+        }
         return configuration
             .getQuestions()
             .parallelStream()
