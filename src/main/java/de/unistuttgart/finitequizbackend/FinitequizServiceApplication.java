@@ -4,12 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(scanBasePackages={
-        "de.unistuttgart"})
+@SpringBootApplication
 @EnableFeignClients
 public class FinitequizServiceApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(FinitequizServiceApplication.class, args);
-  }
+    public static void main(final String[] args) {
+        SpringApplication.run(FinitequizServiceApplication.class, args);
+    }
 }
