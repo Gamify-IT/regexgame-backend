@@ -13,6 +13,7 @@ This repo serves to persist the finitequiz data in a db and to communicate with 
 * [Rest mappings](#rest-mappings)
     * [Swagger-Ui (if started)](#swagger-ui--if-started-)
 * [Class Diagrams](#class-diagrams)
+* [Constants](#constants)
 
 <!-- TOC -->
 
@@ -113,3 +114,12 @@ fill ```http://localhost/minigames/finitequiz/api/v1/v3/api-docs``` into the inp
 ![ConfigController](assets/ConfigService.svg)
 
 ![GameResultController](assets/GameResult.svg)
+
+## Constants
+
+To prevent incorrect or cheated data, all important values are checked for logic.
+The field borders are configured in `src/main/java/de/unistuttgart/finitequizbackend/Constants.java`.
+
+1. `MIN_QUESTION_COUNT` minimal number of questions a player can answer correctly
+2. `MAX_QUESTION_COUNT` maximal number of questions a player can answer correctly
+3. `MIN/MAX_SCORE` should not be changed
