@@ -13,7 +13,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * The ConfigurationDTO.class contains all data that has to be stored to configure a finitequiz game
+ * The ConfigurationDTO.class contains all data that has to be stored to configure a finitequiz game.
  */
 @Data
 @NoArgsConstructor
@@ -22,9 +22,15 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class ConfigurationDTO {
 
+    /**
+     * A unique identifier for the configuration.
+     */
     @Nullable
     UUID id;
 
+    /**
+     * A list of questions that are used in the finitequiz game.
+     */
     @Valid
     Set<QuestionDTO> questions;
 
