@@ -14,7 +14,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * The QuestionDTO.class contains the question related information
+ * The QuestionDTO.class contains the question related information.
  */
 @Data
 @NoArgsConstructor
@@ -23,17 +23,29 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class QuestionDTO {
 
+    /**
+     * A unique identifier for the question.
+     */
     @Nullable
     UUID id;
 
+    /**
+     * The question text.
+     */
     @NotNull(message = "question text cannot be null")
     @NotBlank(message = "question text cannot be blank")
     String text;
 
+    /**
+     * The correct answer.
+     */
     @NotNull(message = "right answer cannot be null")
     @NotBlank(message = "right answer cannot be blank")
     String rightAnswer;
 
+    /**
+     * A list of wrong answers.
+     */
     Set<String> wrongAnswers;
 
     public QuestionDTO(final String text, final String rightAnswer, final Set<String> wrongAnswers) {

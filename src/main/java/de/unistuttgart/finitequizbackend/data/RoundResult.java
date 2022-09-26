@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * The RoundResult.class contains the round result related information
+ * The RoundResult.class contains the round result related information.
  */
 @Entity
 @Data
@@ -24,15 +24,24 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class RoundResult {
 
+    /**
+     * A unique identifier for the round result.
+     */
     @Id
     @GeneratedValue(generator = "uuid")
     UUID id;
 
+    /**
+     * The question that was answered.
+     */
     @NotNull(message = "question cannot be null")
     @ManyToOne
     @Valid
     Question question;
 
+    /**
+     * The text of the answer that the user selected.
+     */
     @NotNull(message = "answer cannot be null")
     @NotBlank(message = "answer cannot be blank")
     String answer;
