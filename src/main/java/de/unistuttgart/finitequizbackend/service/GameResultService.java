@@ -60,10 +60,12 @@ public class GameResultService {
      * Casts a GameResultDTO to GameResult and saves it in the Database
      *
      * @param gameResultDTO extern gameResultDTO
+     * @param userId id of the user
+     * @param accessToken accessToken of the user
      * @throws IllegalArgumentException if at least one of the arguments is null
      */
-    public void saveGameResult(final @Valid GameResultDTO gameResultDTO, final String userId) {
-        if (gameResultDTO == null || userId == null) {
+    public void saveGameResult(final @Valid GameResultDTO gameResultDTO, final String userId, final String accessToken) {
+        if (gameResultDTO == null || userId == null || accessToken == null) {
             throw new IllegalArgumentException("gameResultDTO or userId is null");
         }
         final int resultScore = calculateResultScore(
@@ -77,7 +79,7 @@ public class GameResultService {
             userId
         );
         try {
-            resultClient.submit(resultDTO);
+            resultClient.submit(accessToken, resultDTO);
             final List<RoundResult> correctQuestions =
                 this.castQuestionList(gameResultDTO.getCorrectAnsweredQuestions());
             final List<RoundResult> wrongQuestions = this.castQuestionList(gameResultDTO.getWrongAnsweredQuestions());
