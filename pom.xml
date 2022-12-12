@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.unistuttgart</groupId>
-    <artifactId>finitequiz-backend</artifactId>
+<artifactId>regexgame-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Finitequiz Backend</name>
-    <description>Backend for the Finitequiz minigame.</description>
+<name>RegexGame Backend</name>
+<description>Backend for the RegexGame minigame.</description>
     <properties>
         <java.version>17</java.version>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
@@ -141,7 +141,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.unistuttgart.finitequizbackend.FinitequizServiceApplication</mainClass>
+<mainClass>de.unistuttgart.regexgamebackend.RegexGameServiceApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

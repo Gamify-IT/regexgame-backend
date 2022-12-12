@@ -1,4 +1,4 @@
-package de.unistuttgart.finitequizbackend;
+package de.unistuttgart.regexgamebackend;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -7,11 +7,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-public class FinitequizServiceConfiguration implements WebMvcConfigurer {
+public class RegexGameServiceConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(final CorsRegistry registry) {
-        // allow CORS requests for all resources and HTTP methods from the frontend origin
+        // allow CORS requests for all resources and HTTP methods from the frontend
+        // origin
         registry.addMapping("/**").allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE");
     }
 }

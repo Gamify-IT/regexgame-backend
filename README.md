@@ -1,7 +1,7 @@
-# Finitequiz-Backend
+# regexgame-Backend
 
 This repository contains the backend for
-the [Finitequiz minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/finitequiz.html).
+the [regexgame minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/regexgame.html).
 
 It persists the game data (configurations, game results, etc.) in a database and communicates with other backend
 services.
@@ -10,7 +10,7 @@ services.
 
 <!-- TOC -->
 * [Links](#links)
-* [REST API](#rest-api)
+* [REST API](#rest-api)s
   * [Swagger-Ui](#swagger-ui)
 * [Getting started](#getting-started)
   * [Run](#run)
@@ -18,15 +18,13 @@ services.
     * [Project build](#project-build)
     * [With Docker](#with-docker)
   * [Testing Database](#testing-database)
-* [Class Diagrams](#class-diagrams)
-* [Constants](#constants)
 <!-- TOC -->
 
 ## Links
 
 - User documentation for the minigame can be
-  found [here](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/finitequiz.html).
-- For the frontend, see the [Gamify-IT/finitequiz repository](https://github.com/Gamify-IT/finitequiz).
+  found [here](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/regexgame.html).
+- For the frontend, see the [Gamify-IT/regexgame repository](https://github.com/Gamify-IT/regexgame).
 - The installation manual and setup instructions can be
   found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
 
@@ -35,17 +33,16 @@ services.
 Rest mappings are defined in
 
 - Game result
-  controller: [`src/main/java/de/unistuttgart/finitequizbackend/controller/GameResultController.java`](src/main/java/de/unistuttgart/finitequizbackend/controller/GameResultController.java)
+  controller: [`src/main/java/de/unistuttgart/regexgamebackend/controller/GameResultController.java`](src/main/java/de/unistuttgart/regexgamebackend/controller/GameResultController.java)
 - Config
-  controller: [`src/main/java/de/unistuttgart/finitequizbackend/controller/ConfigController.java`](src/main/java/de/unistuttgart/finitequizbackend/controller/ConfigController.java)
+  controller: [`src/main/java/de/unistuttgart/regexgamebackend/controller/ConfigController.java`](src/main/java/de/unistuttgart/regexgamebackend/controller/ConfigController.java)
 
 ### Swagger-Ui
 
 When the service is started (see [Getting started](#getting-started)), you can access the API documentation:
 
-Open <http://localhost/minigames/finitequiz/api/v1/swagger-ui/index.html#/> and
-fill `http://localhost/minigames/finitequiz/api/v1/v3/api-docs` into the input field in the navbar.
-![img.png](assets/finitequiz-swagger.png)
+Open <http://localhost/minigames/regexgame/api/v1/swagger-ui/index.html#/> and
+fill `http://localhost/minigames/regexgame/api/v1/v3/api-docs` into the input field in the navbar.
 
 
 ## Getting started
@@ -78,7 +75,7 @@ in the folder of the project.
 Go to the target folder and run
 
 ```sh
-java -jar finitequiz-service-0.0.1-SNAPSHOT.jar
+java -jar regexgame-service-0.0.1-SNAPSHOT.jar
 ```
 
 #### With Docker
@@ -86,33 +83,33 @@ java -jar finitequiz-service-0.0.1-SNAPSHOT.jar
 Build the Docker container with
 
 ```sh
-docker build  -t finitequiz-backend-dev .
+docker build  -t regexgame-backend-dev .
 ```
 
 And run it at port 8000 with
 
 ```
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name finitequiz-backend-dev finitequiz-backend-dev
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name regexgame-backend-dev regexgame-backend-dev
 ```
 
 To monitor, stop and remove the container you can use the following commands:
 
 ```sh
-docker ps -a -f name=finitequiz-backend-dev
+docker ps -a -f name=regexgame-backend-dev
 ```
 
 ```sh
-docker stop finitequiz-backend-dev
+docker stop regexgame-backend-dev
 ```
 
 ```sh
-docker rm finitequiz-backend-dev
+docker rm regexgame-backend-dev
 ```
 
 To run the prebuild container use
 
 ```sh
-docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name finitequiz-backend ghcr.io/gamify-it/finitequiz-backend:latest
+docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name regexgame-backend ghcr.io/gamify-it/regexgame-backend:latest
 ```
 
 ### Testing Database
@@ -120,26 +117,11 @@ docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432
 to setup a database with docker for testing you can use
 
 ```sh
-docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name finitequiz-database postgres
+docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name regexgame-database postgres
 ```
 
 To stop and remove it simply type
 
 ```sh
-docker stop finitequiz-database
+docker stop regexgame-database
 ```
-
-## Class Diagrams
-
-![ConfigController](assets/ConfigService.svg)
-
-![GameResultController](assets/GameResult.svg)
-
-## Constants
-
-To prevent incorrect or cheated data, all important values are checked for logic.
-The field borders are configured in `src/main/java/de/unistuttgart/finitequizbackend/Constants.java`.
-
-1. `MIN_QUESTION_COUNT` minimal number of questions a player can answer correctly
-2. `MAX_QUESTION_COUNT` maximal number of questions a player can answer correctly
-3. `MIN/MAX_SCORE` should not be changed
