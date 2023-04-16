@@ -2,7 +2,10 @@ package de.unistuttgart.regexgamebackend.controller;
 
 import de.unistuttgart.gamifyit.authentificationvalidator.JWTValidatorService;
 import de.unistuttgart.regexgamebackend.data.Configuration;
+import de.unistuttgart.regexgamebackend.data.RegexStructure;
 import de.unistuttgart.regexgamebackend.service.ConfigurationService;
+
+import java.util.EnumSet;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +23,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+class ConfigurationDTO {
+    private UUID id;
+    private EnumSet<RegexStructure> allowedRegexStructures;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public EnumSet<RegexStructure> getAllowedRegexStructures() {
+        return allowedRegexStructures;
+    }
+}
+
 @RestController
 @RequestMapping("/configurations")
 @Import({ JWTValidatorService.class })
 @Validated
 public class ConfigurationController {
 
+    public static final List<String> LECTURER = List.of("lecturer");
     @Autowired
     ConfigurationService configurationService;
 
@@ -51,23 +68,32 @@ public class ConfigurationController {
     @ResponseStatus(HttpStatus.CREATED)
     public Configuration createConfiguration(
         @CookieValue("access_token") final String accessToken,
-        @NonNull final Configuration configuration
+        @NonNull final ConfigurationDTO configuration
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
-        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
-        return configurationService.saveConfiguration(configuration);
+        jwtValidatorService.hasRolesOrThrow(accessToken, LECTURER);
+
+        Configuration persistentConfiguration = new Configuration();
+        persistentConfiguration.setAllowedRegexStructures(configuration.getAllowedRegexStructures());
+        persistentConfiguration.setId(configuration.getId());
+
+        return configurationService.saveConfiguration(persistentConfiguration);
     }
 
     @PutMapping("/{id}")
     public Configuration updateConfiguration(
         @CookieValue("access_token") final String accessToken,
         @PathVariable @NonNull final UUID id,
-        @NonNull final Configuration configuration
+        @NonNull final ConfigurationDTO configuration
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
-        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
-        configuration.setId(id);
-        return configurationService.updateConfiguration(configuration);
+        jwtValidatorService.hasRolesOrThrow(accessToken, LECTURER);
+
+        Configuration persistentConfiguration = new Configuration();
+        persistentConfiguration.setAllowedRegexStructures(configuration.getAllowedRegexStructures());
+        persistentConfiguration.setId(id);
+
+        return configurationService.updateConfiguration(persistentConfiguration);
     }
 
     @DeleteMapping("/{id}")
@@ -76,7 +102,7 @@ public class ConfigurationController {
         @PathVariable @NonNull final UUID id
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
-        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
+        jwtValidatorService.hasRolesOrThrow(accessToken, LECTURER);
         return configurationService.deleteConfiguration(id);
     }
 }
