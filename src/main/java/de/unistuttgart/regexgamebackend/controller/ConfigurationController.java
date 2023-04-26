@@ -7,6 +7,7 @@ import de.unistuttgart.regexgamebackend.service.ConfigurationService;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -23,24 +24,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-class ConfigurationDTO {
-    private UUID id;
-    private EnumSet<RegexStructure> allowedRegexStructures;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public EnumSet<RegexStructure> getAllowedRegexStructures() {
-        return allowedRegexStructures;
-    }
-}
-
 @RestController
 @RequestMapping("/configurations")
 @Import({ JWTValidatorService.class })
 @Validated
 public class ConfigurationController {
+
+    static class ConfigurationDTO {
+        private UUID id;
+        private EnumSet<RegexStructure> allowedRegexStructures;
+
+        public UUID getId() {
+            return id;
+        }
+
+        public EnumSet<RegexStructure> getAllowedRegexStructures() {
+            return allowedRegexStructures;
+        }
+    }
 
     public static final List<String> LECTURER = List.of("lecturer");
     @Autowired
