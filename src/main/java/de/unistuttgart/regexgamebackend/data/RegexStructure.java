@@ -2,33 +2,21 @@ package de.unistuttgart.regexgamebackend.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ * This enumerates all possible RegexStructures
+ * They are documented in the frontend.
+ */
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum RegexStructure {
-    /**
-     * Simple character classes.
-     *
-     * [xyz]
-     */
+    SINGLE_CHARACTER,
+    CHARACTER_SEQUENCE,
+    ANY_SINGLE_CHARACTER,
+    GROUP,
     CHARACTER_CLASS,
-
-    /**
-     * {@link #CHARACTER_CLASS} including ranges.
-     *
-     * [a-z]
-     */
-    CHARACTER_CLASS_RANGE,
-
-    /**
-     * The inverse of {@link #CHARACTER_CLASS}.
-     *
-     * [^xyz]
-     */
-    NEGATED_CHARACTER_CLASS,
-
-    /**
-     * Match a single character.
-     *
-     * .
-     */
-    SINGLE_CHARACTER_MATCH,
+    DISJUNCTION,
+    ANY_AMOUNT_QUANTIFIER,
+    AT_LEAST_ONE_QUANTIFIER,
+    OPTIONAL_QUANTIFIER,
+    CHARACTER_CLASS_INVERTED,
+    ABSOLUTE_NUMERIC_QUANTIFIER,
 }
