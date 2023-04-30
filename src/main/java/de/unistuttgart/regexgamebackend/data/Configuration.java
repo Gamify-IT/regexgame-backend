@@ -66,4 +66,14 @@ public class Configuration {
     @Nullable
     @Range(min = 0)
     Integer riddleTimeoutSeconds;
+
+    @Override
+    public Configuration clone() {
+        Configuration newConfiguration = new Configuration();
+        newConfiguration.allowedRegexStructures = this.allowedRegexStructures.clone();
+        newConfiguration.minimumCompletedRounds = this.minimumCompletedRounds;
+        newConfiguration.answerCount = this.answerCount;
+        newConfiguration.riddleTimeoutSeconds = this.riddleTimeoutSeconds;
+        return newConfiguration;
+    }
 }

@@ -79,4 +79,12 @@ public class ConfigurationController {
         jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
         return configurationService.deleteConfiguration(id);
     }
+
+    @PostMapping("/{id}/clone")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UUID cloneConfiguration(@CookieValue("access_token") final String accessToken, @PathVariable final UUID id) {
+        jwtValidatorService.validateTokenOrThrow(accessToken);
+        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
+        return configurationService.cloneConfiguration(id);
+    }
 }

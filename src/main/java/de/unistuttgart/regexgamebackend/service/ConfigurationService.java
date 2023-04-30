@@ -82,4 +82,21 @@ public class ConfigurationService {
         configurationRepository.deleteById(id);
         return configuration;
     }
+
+    /**
+     * Clone a configuration
+     * 
+     * @param id id of a given configuration
+     * @return id of the new configuration of equal content
+     */
+    public UUID cloneConfiguration(final UUID id) {
+        final Configuration config = configurationRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        String.format("Configuration with id %s not found", id)));
+        final Configuration clonedConfig = config.clone();
+        final Configuration savedConfig = configurationRepository.save(clonedConfig);
+        return savedConfig.getId();
+    }
 }
