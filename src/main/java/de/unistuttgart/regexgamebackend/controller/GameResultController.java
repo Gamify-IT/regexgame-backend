@@ -29,6 +29,7 @@ public class GameResultController {
         @RequestBody final GameResult gameResult
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
+        gameResult.setUserId(jwtValidatorService.extractUserId(accessToken));
         gameResultService.submitGameResult(gameResult, accessToken);
     }
 }

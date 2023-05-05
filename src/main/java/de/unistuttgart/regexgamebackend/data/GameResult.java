@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.lang.NonNull;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,7 @@ public class GameResult {
     /**
      * id of the configuration
      */
+    @NonNull
     UUID configurationId;
 
     /**
@@ -32,4 +34,10 @@ public class GameResult {
      */
     @Range(min = 0)
     int completedRounds;
+
+    /**
+     * user id
+     */
+    @NonNull
+    String userId;
 }
