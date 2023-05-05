@@ -1,14 +1,12 @@
 package de.unistuttgart.regexgamebackend.data;
 
 import java.util.UUID;
-
-import org.hibernate.validator.constraints.Range;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Range;
 
 @Data
 @AllArgsConstructor
@@ -34,5 +32,4 @@ public class GameResult {
      */
     @Range(min = 0)
     int completedRounds;
-
 }

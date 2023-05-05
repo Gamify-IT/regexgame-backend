@@ -2,21 +2,18 @@ package de.unistuttgart.regexgamebackend.data;
 
 import java.util.EnumSet;
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Range;
-import org.springframework.lang.Nullable;
-import org.springframework.validation.annotation.Validated;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Contains all data that have to be stored to configure a regex game.
