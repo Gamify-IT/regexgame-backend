@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +52,7 @@ public class ConfigurationController {
     @ResponseStatus(HttpStatus.CREATED)
     public Configuration createConfiguration(
         @CookieValue("access_token") final String accessToken,
-        @NonNull final Configuration configuration
+        @NonNull @RequestBody final Configuration configuration
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
         jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
@@ -62,7 +63,7 @@ public class ConfigurationController {
     public Configuration updateConfiguration(
         @CookieValue("access_token") final String accessToken,
         @PathVariable @NonNull final UUID id,
-        @NonNull final Configuration configuration
+        @NonNull @RequestBody final Configuration configuration
     ) {
         jwtValidatorService.validateTokenOrThrow(accessToken);
         jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
@@ -78,5 +79,13 @@ public class ConfigurationController {
         jwtValidatorService.validateTokenOrThrow(accessToken);
         jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
         return configurationService.deleteConfiguration(id);
+    }
+
+    @PostMapping("/{id}/clone")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UUID cloneConfiguration(@CookieValue("access_token") final String accessToken, @PathVariable final UUID id) {
+        jwtValidatorService.validateTokenOrThrow(accessToken);
+        jwtValidatorService.hasRolesOrThrow(accessToken, List.of("lecturer"));
+        return configurationService.cloneConfiguration(id);
     }
 }
