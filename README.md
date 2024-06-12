@@ -1,4 +1,4 @@
-# regexgame-Backend
+# Regexgame-Backend
 
 This repository contains the backend for
 the [regexgame minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/regexgame.html).
@@ -13,11 +13,11 @@ services.
 * [REST API](#rest-api)s
   * [Swagger-Ui](#swagger-ui)
 * [Getting started](#getting-started)
-  * [Run](#run)
-    * [Docker-compose](#docker-compose)
-    * [Project build](#project-build)
-    * [With Docker](#with-docker)
-  * [Testing Database](#testing-database)
+* [Run](#run)
+  * [Project build](#project-build)
+  * [Build with docker](#build-with-docker)
+  * [Docker compose](#docker-compose)
+* [Testing Database](#testing-database)
 <!-- TOC -->
 
 ## Links
@@ -27,6 +27,7 @@ services.
 - For the frontend, see the [Gamify-IT/regexgame repository](https://github.com/Gamify-IT/regexgame).
 - The installation manual and setup instructions can be
   found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
+- Docker documentation can be found Check the [here](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md).
 
 ## REST API
 
@@ -51,44 +52,36 @@ Make sure you have the following installed:
 
 - Java: [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or higher
 - Maven: [Maven 3.6.3](https://maven.apache.org/download.cgi)
-- Docker: [Docker latest or higher](https://www.docker.com/)
+- Docker: [Docker latest](https://www.docker.com/)
 
 First you have to change the spring.datasource.username and the spring.datasource.password in the application.properties
 file. If you changed the properties of the postgres db, you also have to change spring.datasource.url.
 
-### Run
+## Run
+### Project build
 
-#### Docker-compose
-
-Start all dependencies with our docker-compose files.
-Check
-the [manual for starting the dependencies with docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md)
-.
-
-#### Project build
-
+Execute the following in the project directory to build the project locally:
 ```sh
 mvn install
 ```
 
-in the folder of the project.
-Go to the target folder and run
+Then go to the target folder and run:
 
 ```sh
 java -jar regexgame-service-0.0.1-SNAPSHOT.jar
 ```
 
-#### With Docker
+### Build with Docker
 
-Build the Docker container with
+Build the Docker container with the following:
 
 ```sh
 docker build  -t regexgame-backend-dev .
 ```
 
-And run it at port 8000 with
+And run it at port 8000 with:
 
-```
+```sh
 docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name regexgame-backend-dev regexgame-backend-dev
 ```
 
@@ -106,21 +99,42 @@ docker stop regexgame-backend-dev
 docker rm regexgame-backend-dev
 ```
 
-To run the prebuild container use
+To run the prebuild container use:
 
 ```sh
 docker run -d -p 8000:80 -e POSTGRES_URL="postgresql://host.docker.internal:5432/postgres" -e POSTGRES_USER="postgres" -e POSTGRES_PASSWORD="postgres" --name regexgame-backend ghcr.io/gamify-it/regexgame-backend:latest
 ```
 
-### Testing Database
+### Docker compose
+To use the docker compose files to run your local changes as a container, use:
+```sh
+docker compose up --build
+```
+To shutdown the container use:
+```sh
+docker compose down
+```
 
-to setup a database with docker for testing you can use
+If you only want to start the dependencies via docker and run the project locally, use the `docker-compose-dev.yaml`
+file instead:
+```sh
+docker compose -f docker-compose-dev.yaml up
+```
+To shutdown use:
+```sh
+docker compose -f docker-compose-dev.yaml down
+```
+You can then run the backend locally as described above.
+
+## Testing Database
+
+To setup a database with docker for testing you can use:
 
 ```sh
 docker run -d -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres  --rm --name regexgame-database postgres
 ```
 
-To stop and remove it simply type
+To stop and remove it use:
 
 ```sh
 docker stop regexgame-database
