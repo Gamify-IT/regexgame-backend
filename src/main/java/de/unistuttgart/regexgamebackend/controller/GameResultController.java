@@ -40,17 +40,6 @@ public class GameResultController {
 
     /**
      * Calculates the amount of rewards given to the player.
-     * The amount changes depending on the score, with a successful run giving 10 coins.
-     *
-     * @param score completion in percent
-     * @return rewards (range 0 - 10)
-     */
-    private int calculateRewards(final long score) {
-        return (int) score/10;
-    }
-
-    /**
-     * Calculates the amount of rewards given to the player.
      * The amount changes depending on the score, for each 2 mandatory rounds completed,
      * the player will receive 1 coin. For every 4 endless rounds completed afterwards, the player
      * will receive 1 coin.
