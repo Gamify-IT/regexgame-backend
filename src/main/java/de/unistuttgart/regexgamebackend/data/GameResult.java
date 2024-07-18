@@ -40,4 +40,10 @@ public class GameResult {
      */
     @NonNull
     String userId;
+
+    /**
+     * Rewards gained after playing the game (coins)
+     */
+    @Range(min = 0)
+    int rewards;
 }
